@@ -13,23 +13,39 @@ const answer_interface_1 = require("../interfaces/answer.interface");
 let CardsService = class CardsService {
     constructor() {
         this.answers = [];
-    }
-    getCards() {
-        const cards = [
+        this.cards = [
             {
                 id: 1,
-                question: 'What is the language of the web',
+                question: 'What is the language of the web ?',
                 answer: 'javascript',
             },
             {
                 id: 2,
-                question: 'What is the coolest job',
+                question: 'What is the coolest job ?',
+                answer: 'Programmer',
+            },
+            {
+                id: 3,
+                question: 'What is a intarface ?',
+                answer: 'A contract',
+            },
+            {
+                id: 4,
+                question: 'In push() matating a array ?',
                 answer: 'Programmer',
             },
         ];
-        return new Promise((resolve) => {
-            resolve(cards);
+    }
+    getCards() {
+        return new Promise(resolve => {
+            resolve(this.selectCardsUseeFailedToAnswer());
         });
+    }
+    selectCardsUseeFailedToAnswer() {
+        if (this.answers.length === 0)
+            return this.cards;
+        const cardsFailedToAnswer = this.answers.filter(c => c.isRight === false);
+        return cardsFailedToAnswer.map(c => c.card);
     }
     saveAnswer(answers) {
         return new Promise((resolve) => {
